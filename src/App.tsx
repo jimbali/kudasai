@@ -1,13 +1,10 @@
-import { BrowserRouter as Router } from 'react-router-dom'
 import React from 'react'
-import logo from './logo.svg'
 import './App.css'
+import ClippedDrawer from './components/clippedDrawer'
 
 const App: React.FC = () => {
   return (
-    <Router>
-
-    </Router>
+    <ClippedDrawer/>
   )
 }
 
