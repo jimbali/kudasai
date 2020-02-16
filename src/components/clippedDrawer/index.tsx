@@ -1,18 +1,23 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import { BrowserRouter as Router, Link, Redirect, Route, Switch } from 'react-router-dom';
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Drawer from '@material-ui/core/Drawer'
+import AppBar from '@material-ui/core/AppBar'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import Toolbar from '@material-ui/core/Toolbar'
+import List from '@material-ui/core/List'
+import Typography from '@material-ui/core/Typography'
+import Divider from '@material-ui/core/Divider'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import SettingsIcon from '@material-ui/icons/Settings'
+import CategoryIcon from '@material-ui/icons/Category'
+import SettingsInputComponentIcon from '@material-ui/icons/SettingsInputComponent'
+import SubjectIcon from '@material-ui/icons/Subject'
+import InputIcon from '@material-ui/icons/Input'
+import { BrowserRouter as Router, Link, Redirect, Route, Switch } from 'react-router-dom'
+import BlueprintList from '../blueprintList'
+import EditBlueprint from '../editBlueprint'
 
 const drawerWidth = 240;
 
@@ -40,6 +45,12 @@ const useStyles = makeStyles(theme => ({
 
 export default function ClippedDrawer(props: JSX.IntrinsicAttributes) {
   const classes = useStyles();
+  const sections = [
+    { name: 'Blueprints', id: 'blueprints', icon: CategoryIcon },
+    { name: 'Content', id: 'content', icon: SubjectIcon },
+    { name: 'Sources', id: 'sources', icon: InputIcon },
+    { name: 'Connectors', id: 'connectors', icon: SettingsInputComponentIcon }
+  ]
 
   return (
     <div className={classes.root}>
@@ -47,7 +58,7 @@ export default function ClippedDrawer(props: JSX.IntrinsicAttributes) {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Clipped drawer
+            Kudasai Admin Panel
           </Typography>
         </Toolbar>
       </AppBar>
@@ -61,20 +72,20 @@ export default function ClippedDrawer(props: JSX.IntrinsicAttributes) {
         >
           <div className={classes.toolbar} />
             <List>
-              {['Inbox', 'Starred', 'Sent', 'Drafts'].map((text, index) => (
-                <Link to={ text.toLowerCase() }>
-                  <ListItem button key={text}>
-                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                    <ListItemText primary={text} />
+              {sections.map((section, _index) => (
+                <Link to={ '/' + section.id } key={section.id}>
+                  <ListItem button>
+                    <ListItemIcon>{React.createElement(section.icon)}</ListItemIcon>
+                    <ListItemText primary={section.name} />
                   </ListItem>
                 </Link>
               ))}
             </List>
           <Divider />
           <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
+            {['Settings'].map((text, index) => (
               <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemIcon>{<SettingsIcon />}</ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
             ))}
@@ -82,31 +93,19 @@ export default function ClippedDrawer(props: JSX.IntrinsicAttributes) {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Redirect from="/" to="/inbox"/>
+          <Redirect from="/" to="/blueprints"/>
           <Switch>
-            <Route path="/inbox">
-              <Typography paragraph>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                magna aliqua. Rhoncus dolor purus non enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-                imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus. Convallis convallis tellus id interdum
-                velit laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-                adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate eu
-                scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt
-                lobortis feugiat vivamus at augue. At augue eget arcu dictum varius duis at consectetur lorem. Velit sed
-                ullamcorper morbi tincidunt. Lorem donec massa sapien faucibus et molestie ac.
-              </Typography>
-              <Typography paragraph>
-                Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla facilisi etiam
-                dignissim diam. Pulvinar elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus
-                sed viverra tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis sed odio morbi. Euismod
-                lacinia at quis risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in.
-                In hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-                morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin nibh sit. Ornare aenean euismod
-                elementum nisi quis eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla posuere
-                sollicitudin aliquam ultrices sagittis orci a.
-              </Typography>
+            <Route path="/blueprints">
+              <Switch>
+                <Route path={'/blueprints/:blueprintId'}>
+                  <EditBlueprint />
+                </Route>
+                <Route path={'/blueprints'}>
+                  <BlueprintList />
+                </Route>
+              </Switch>
             </Route>
-            <Route path="/starred">
+            <Route path="/content">
               <Typography paragraph>
                 Bacon ipsum dolor amet pork bacon boudin, picanha corned beef cow tri-tip pork chop venison pork loin shank pig.
                 Landjaeger sirloin chicken boudin. Tongue ground round sausage andouille hamburger. Shank turducken spare ribs
@@ -120,7 +119,7 @@ export default function ClippedDrawer(props: JSX.IntrinsicAttributes) {
                 Meatloaf venison cow jowl, turkey alcatra ham hock chuck salami shank capicola chicken pork chop.
               </Typography>
             </Route>
-            <Route path="/sent">
+            <Route path="/sources">
               <Typography paragraph>
                 I love cheese, especially melted cheese cottage cheese. Manchego bavarian bergkase paneer gouda caerphilly stinking
                 bishop squirty cheese boursin. Who moved my cheese manchego rubber cheese cream cheese cheese strings mascarpone
@@ -138,7 +137,7 @@ export default function ClippedDrawer(props: JSX.IntrinsicAttributes) {
                 stilton babybel dolcelatte cauliflower cheese. Gouda.
               </Typography>
             </Route>
-            <Route path="/drafts">
+            <Route path="/connectors">
               <Typography paragraph>
                 Marooned fire in the hole chantey black jack splice the main brace sheet careen brigantine jolly boat bowsprit. Coffer
                 parrel fluke keelhaul haul wind fire ship scurvy Letter of Marque loot Corsair. Lass Buccaneer piracy hearties coxswain
