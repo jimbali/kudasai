@@ -18,6 +18,8 @@ import InputIcon from '@material-ui/icons/Input'
 import { BrowserRouter as Router, Link, Redirect, Route, Switch } from 'react-router-dom'
 import BlueprintList from '../blueprintList'
 import EditBlueprint from '../editBlueprint'
+import SourceList from '../sourceList'
+import EditSource from '../editSource'
 
 const drawerWidth = 240;
 
@@ -120,22 +122,14 @@ export default function ClippedDrawer(props: JSX.IntrinsicAttributes) {
               </Typography>
             </Route>
             <Route path="/sources">
-              <Typography paragraph>
-                I love cheese, especially melted cheese cottage cheese. Manchego bavarian bergkase paneer gouda caerphilly stinking
-                bishop squirty cheese boursin. Who moved my cheese manchego rubber cheese cream cheese cheese strings mascarpone
-                cheese triangles cheese slices. Cow lancashire macaroni cheese feta squirty cheese edam cream cheese fondue. Pepper
-                jack when the cheese comes out everybody's happy ricotta roquefort boursin who moved my cheese cheesy grin mascarpone.
-                Caerphilly fromage boursin cow port-salut when the cheese comes out everybody's happy fondue pepper jack. Cheesy grin.
-              </Typography>
-              <Typography paragraph>
-                Red leicester cow pecorino. Cheesecake emmental cheesy grin chalk and cheese melted cheese melted cheese airedale
-                stilton. Airedale danish fontina roquefort stinking bishop mascarpone cheese and biscuits blue castello melted cheese.
-                Jarlsberg st. agur blue cheese squirty cheese cheese triangles airedale stilton cauliflower cheese fromage. Fromage
-                cheese and biscuits gouda dolcelatte croque monsieur cheese strings hard cheese stinking bishop. Emmental fromage
-                frais cauliflower cheese cheese strings babybel fromage frais cheesy feet cream cheese. Boursin feta cheeseburger
-                jarlsberg st. agur blue cheese goat danish fontina brie. Boursin mascarpone cheese triangles cauliflower cheese
-                stilton babybel dolcelatte cauliflower cheese. Gouda.
-              </Typography>
+              <Switch>
+                <Route path={'/sources/:sourceId'}>
+                  <EditSource />
+                </Route>
+                <Route path={'/sources'}>
+                  <SourceList />
+                </Route>
+              </Switch>
             </Route>
             <Route path="/connectors">
               <Typography paragraph>
